@@ -1,0 +1,65 @@
+<div class="hp-filter-section">
+  <span class="mb-1"><b>Filters:</b></span>
+  <div class="hp-filters">
+    <div class="hp-filter">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="Title"
+        [(ngModel)]="movieTitleName"
+      />
+    </div>
+    <div class="hp-releaseYearFilter">
+      <label for="releaseYear" class="form-label">Release Year</label>
+      <input
+        type="text"
+        class="form-control"
+        id="releaseYear"
+        (keypress)="inputNumberOnly($event)"
+        placeholder="Release Year"
+        [(ngModel)]="movieReleaseYear"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="hp-movies-list">
+  <ng-container
+    *ngFor="
+      let movie of moviesList | harryPotterMovieFilters : movieTitleName : movieReleaseYear
+    "
+  >
+    <div class="hp-movies-container">
+      <div class="hp-movies-info">
+        <div class="movie-name">
+          <p class="title">
+            {{ movie.title }}
+          </p>
+          <span
+            ><b class="name">Release Date:</b> {{ movie.release_date }}</span
+          >
+          <span class="mr-1 ml-1"
+            ><b class="name">Budget:</b> ${{ movie.budget }}
+            {{ " " }} million</span
+          >
+          <span class="mr-1"
+            ><b class="name">Duration:</b>
+            {{ movie.duration | duration }}</span
+          >
+        </div>
+      </div>
+      <div class="hp-details-container">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="{{ movie.id }}"
+          (click)="goToMovieDetails(movie.id)"
+        >
+          Details
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>
